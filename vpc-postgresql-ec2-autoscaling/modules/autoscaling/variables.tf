@@ -10,6 +10,10 @@ variable "sg" {
   type = any
 }
 
+variable "instance_type" {
+  type = any
+}
+
 variable "db_config" {
   type = object(
     {

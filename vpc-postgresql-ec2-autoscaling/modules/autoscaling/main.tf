@@ -17,7 +17,7 @@ module "iam_instance_profile" {
 resource "aws_launch_template" "web" {
   name_prefix = "web-"
   image_id = data.aws_ami.ami.id
-  instance_type = "t2.micro"
+  instance_type = var.instance_type
 
   vpc_security_group_ids = [var.sg.web]
 

@@ -1,25 +1,21 @@
-locals {
-  project = "terraform-example"
-}
-
 provider "aws" {
-  region = "ap-southeast-1"
+  region = var.region
 }
 
 module "networking" {
   source = "./modules/networking"
 
-  project = local.project
-  vpc_cidr = "10.0.0.0/16"
-  private_subnets  = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  public_subnets   = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
-  database_subnets = ["10.0.7.0/24", "10.0.8.0/24", "10.0.9.0/24"]
+  project   = var.project
+  vpc_cidr  = var.vpc_cidr
+  private_subnets  = var.private_subnets
+  public_subnets   = var.public_subnets
+  database_subnets = var.database_subnets
 }
 
 module "database" {
   source = "./modules/database"
 
-  project = local.project
+  project = var.project
   vpc     = module.networking.vpc
   sg      = module.networking.sg
 }
@@ -27,8 +23,9 @@ module "database" {
 module "autoscaling" {
   source = "./modules/autoscaling"
   
-  project   = local.project
+  project   = var.project
   vpc       = module.networking.vpc
   sg        = module.networking.sg
   db_config = module.database.config
+  instance_type = var.instance_type
 }
