@@ -8,3 +8,7 @@
 - terraform init
 - terraform apply --auto-approve
 - terraform destroy --auto-approve
+
+## Auth
+- duc.bui
+- ducbui.dev@gmail.com
